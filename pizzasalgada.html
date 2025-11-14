@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pizzas Salgadas - La Pizza Pazza</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fdf5e6;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #b22222;
+    }
+
+    .pizza-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .pizza-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+    }
+
+    .pizza-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .pizza-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .pizza-card p {
+      margin: 5px 0;
+    }
+
+    .pizza-card input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #ff4500;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff7f50;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Escolha sua Pizza Salgada </h1>
+
+  <div class="pizza-list">
+    <!-- Pizza 1 -->
+    <div class="pizza-card">
+      <img src="./imagens/calabreza.png" alt="Calabresa">
+      <h3>Calabresa</h3>
+      <p>R$ 35,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 2 -->
+    <div class="pizza-card">
+      <img src="./imagens/fango com catupiry.png" alt="Frango com Catupiry">
+      <h3>Frango com Catupiry</h3>
+      <p>R$ 38,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 3 -->
+    <div class="pizza-card">
+      <img src="./imagens/portuguesa.png" alt="Portuguesa">
+      <h3>Portuguesa</h3>
+      <p>R$ 40,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 4 -->
+    <div class="pizza-card">
+      <img src="./imagens/marguerita.png" alt="Marguerita">
+      <h3>Marguerita</h3>
+      <p>R$ 36,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 5 -->
+    <div class="pizza-card">
+      <img src="./imagens/quatro queijos.png" alt="Quatro Queijos">
+      <h3>Quatro Queijos</h3>
+      <p>R$ 42,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 6 -->
+    <div class="pizza-card">
+      <img src="./imagens/napolitano.png" alt="Napolitana">
+      <h3>Napolitana</h3>
+      <p>R$ 37,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 7 -->
+    <div class="pizza-card">
+      <img src="./imagens/bacom.png" alt="Bacon">
+      <h3>Bacon</h3>
+      <p>R$ 39,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 8 -->
+    <div class="pizza-card">
+      <img src="./imagens/atum.png" alt="Atum">
+      <h3>Atum</h3>
+      <p>R$ 36,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 9 -->
+    <div class="pizza-card">
+      <img src="./imagens/palmito.png" alt="Palmito">
+      <h3>Palmito</h3>
+      <p>R$ 41,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+
+    <!-- Pizza 10 -->
+    <div class="pizza-card">
+      <img src="./imagens/vegetariana.png" alt="Vegetariana">
+      <h3>Vegetariana</h3>
+      <p>R$ 39,00</p>
+      <label>Quantidade: <input type="number" min="0" value="0"></label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button onclick="alert('Pedido realizado com sucesso!')">Pedir</button>
+    <button onclick="window.location.href='index.html'">Voltar</button>
+  </div>
+</body>
+</html>

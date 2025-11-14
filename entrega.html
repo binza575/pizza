@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pizzaria — Pedido de Entrega</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --card: #18181b;
+      --muted: #a1a1aa;
+      --text: #ffffff;
+      --primary: #ff4d4f;
+      --accent: #ffd166;
+      --success: #22c55e;
+      --focus: #4f46e5;
+      --border: #2a2a2e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% 0%, #141418 0%, #0f0f12 60%);
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('./imagens/pizza passa.png'); /* Imagem real de pizzaria */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 1px 1px 2px black;
+    }
+    
+    header {
+      padding: 28px 20px 10px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .container {
+      max-width: 980px;
+      margin: 16px auto 40px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 920px) {
+      .container { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: linear-gradient(180deg, #1c1c20 0%, #16161a 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+    .card header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .card header h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    form { padding: 18px; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 560px) {
+      .row { grid-template-columns: 1fr; }
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #121216;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(79,70,229,.25);
+    }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .06s ease, box-shadow .2s ease;
+    }
+    .primary {
+      background: linear-gradient(180deg, #ff6b6b 0%, #ff4d4f 100%);
+      color: #1b0c0c;
+      box-shadow: 0 8px 24px rgba(255, 77, 79, .35);
+    }
+    .primary:hover { transform: translateY(-1px); }
+    .secondary {
+      background: #232327;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #121216;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .map-wrap {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+    .map {
+      width: 100%;
+      height: 360px;
+      border: 0;
+      filter: saturate(1.1) contrast(1.05);
+    }
+    .status {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .status .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(34,197,94,.25);
+    }
+    .timeline {
+      padding: 14px 16px;
+      border-top: 1px dashed var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 8px; color: var(--muted); font-size: 13px;
+    }
+    .brand .slice {
+      width: 18px; height: 18px; border-radius: 4px;
+      background: conic-gradient(from 0deg, #ffb703 0 25%, #fb8500 0 50%, #e63946 0 75%, #8d99ae 0 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pizzaria Coppa — Entrega</h1>
+    <p>Preencha seus dados e acompanhe o pedido pelo mapa em visão de satélite.</p>
+    <div class="brand"><span class="slice"></span> Curitiba • Entregas hoje até 23:30</div>
+  </header>
+
+  <main class="container">
+    <!-- Formulário -->
+    <section class="card">
+      <header>
+        <h2>Dados para entrega</h2>
+      </header>
+      <form id="pedidoForm" novalidate>
+        <div class="row">
+          <div>
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" type="text" placeholder="Ricardo Silva" required />
+          </div>
+          <div>
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" type="tel" placeholder="(41) 99999-9999" pattern="^\(?\d{2}\)?\s?\d{4,5}-\d{4}$" required />
+            <div class="hint">Formato sugerido: (41) 99999-9999</div>
+          </div>
+        </div>
+
+        <label for="endereco">Endereço</label>
+        <input id="endereco" name="endereco" type="text" placeholder="Rua Exemplo, 123 — Bairro" required />
+
+        <div class="row">
+          <div>
+            <label for="complemento">Complemento</label>
+            <input id="complemento" name="complemento" type="text" placeholder="Apto 502, Bloco B" />
+          </div>
+          <div>
+            <label for="cep">CEP</label>
+            <input id="cep" name="cep" type="text" placeholder="80000-000" pattern="^\d{5}-\d{3}$" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="cidade">Cidade</label>
+            <input id="cidade" name="cidade" type="text" placeholder="Curitiba" required />
+          </div>
+          <div>
+            <label for="uf">UF</label>
+            <select id="uf" name="uf" required>
+              <option value="">Selecione</option>
+              <option value="PR" selected>PR</option>
+              <option value="SC">SC</option>
+              <option value="SP">SP</option>
+              <option value="RJ">RJ</option>
+              <option value="RS">RS</option>
+              <!-- adicione outras UFs se precisar -->
+            </select>
+          </div>
+        </div>
+
+        <div class="hint">Após clicar em “Pedir agora”, seu pedido será confirmado e você poderá rastrear no mapa.</div>
+
+        <div class="actions">
+          <button type="submit" class="primary">Pedir agora</button>
+          <button type="reset" class="secondary">Limpar</button>
+          <span class="badge">Entrega média: 35–50 min</span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Mapa e rastreamento -->
+    <section class="card map-wrap">
+      <header>
+        <h2>Rastreamento em visão de satélite</h2>
+      </header>
+
+      <!-- Mapa: visão de satélite (Google Maps embed centrado em Curitiba) -->
+      <iframe
+        id="satMap"
+        class="map"
+        title="Mapa de rastreamento — visão de satélite"
+        src="https://www.google.com/maps?hl=pt&ll=-25.4284,-49.2733&z=12&t=k&output=embed"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+
+      <div class="status" id="statusBar">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="dot" aria-hidden="true"></span>
+          <strong id="statusTxt">Aguardando confirmação do pedido…</strong>
+        </div>
+        <button class="secondary" id="atualizarBtn" disabled>Atualizar rastreio</button>
+      </div>
+
+      <div class="timeline" id="timeline">
+        • 10:47 — Página carregada. <br />
+        • — — — Após confirmar, você verá o status do pedido aqui.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('pedidoForm');
+    const statusTxt = document.getElementById('statusTxt');
+    const atualizarBtn = document.getElementById('atualizarBtn');
+    const timeline = document.getElementById('timeline');
+    const map = document.getElementById('satMap');
+
+    const estados = [
+      { txt: "Pedido confirmado! Preparando sua pizza 🍕", tl: "Pedido confirmado pela loja." },
+      { txt: "Saiu para entrega! Motoboy a caminho 🛵", tl: "Pedido coletado pelo entregador." },
+      { txt: "Chegando ao endereço…", tl: "Entregador próximo ao destino." },
+      { txt: "Entregue. Bom apetite!", tl: "Entrega concluída." }
+    ];
+    let step = -1;
+
+    function appendTimeline(line) {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      timeline.innerHTML += `<br />• ${hh}:${mm} — ${line}`;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const endereco = document.getElementById('endereco').value.trim();
+      const cidade = document.getElementById('cidade').value.trim();
+      const uf = document.getElementById('uf').value;
+
+      if (!nome || !endereco || !cidade || !uf) {
+        alert("Preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      step = 0;
+      statusTxt.textContent = estados[step].txt;
+      atualizarBtn.disabled = false;
+
+      appendTimeline(`Pedido #${Math.random().toString(36).slice(2,7).toUpperCase()} confirmado para ${nome}.`);
+      appendTimeline(estados[step].tl);
+
+      // centraliza o mapa na cidade informada (busca simples)
+      const q = encodeURIComponent(`${endereco}, ${cidade} - ${uf}`);
+      map.src = `https://www.google.com/maps?hl=pt&q=${q}&z=16&t=k&output=embed`;
+    });
+
+    atualizarBtn.addEventListener('click', () => {
+      if (step < estados.length - 1) {
+        step++;
+        statusTxt.textContent = estados[step].txt;
+        appendTimeline(estados[step].tl);
+      }
+      if (step === estados.length - 1) {
+        atualizarBtn.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
